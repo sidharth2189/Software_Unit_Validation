@@ -1,0 +1,3 @@
+From inside the folder my_model_ert_rtw/
+
+gcc -o my_model_win32.so -shared -fPIC -O2 .\my_model.c .\my_model.h .\my_model_private.h .\my_model_types.h .\rtwtypes.h
