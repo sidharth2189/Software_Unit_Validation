@@ -5,7 +5,7 @@
 2. The output may then be verified for expected behaviour.
 
 ## Files
-1. ERT generated code from Embedded Coder in Simulink for the `model my_model.slx`. Please note that, the model is kept simple, purely to demonstrate objective of the repository. The scaling up of model in user's case may be attempted separately.
+1. ERT generated code from Embedded Coder in Simulink for the model `my_model.slx`. Please note that, the model is kept simple, purely to demonstrate objective of the repository. The scaling up of model in user's case may be attempted separately.
 2. This is code is contained in the folder `/my_model_ert_rtw`
 3. In this folder, also is the file `my_model_win32.so`, a shared library for generated code from `my_model.slx` is present that is created
 using gcc compiler. The step to generate it is outlined in `GenLib.txt`
