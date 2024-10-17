@@ -1,29 +1,25 @@
 """
 Define the C-variables and functions from the C-files that are needed in Python
 """
-#from ctypes import c_double, c_int, CDLL
-from ctypes import *
-import sys
-import os
-
-# Must define the structure.
-class aStruct(Structure):
-
-    _fields_ = [("x", c_double)]
+import sys, os
+from interface_my_model import *
 
 # Add relevant library path to directory
-os.add_dll_directory("<complete local path to my_model_ert_rtw>")
+dirname = os.path.dirname(__file__)
+filename = os.path.join(dirname)
+#filename = os.path.join(dirname, 'my_model_ert_rtw') # relative path to the generated library file/object
+os.add_dll_directory(filename)
+
 
 # Access library for generated code
-lib_path = 'my_model_%s.so' % (sys.platform)
+dirname = os.path.dirname(__file__)
+filename = os.path.join(dirname)
+os.add_dll_directory(filename)
+lib_path = 'my_model.so'
 try:
     MyModelLib = CDLL(lib_path)
-except:
-    print('OS %s not recognized' % (sys.platform))
-
-# Set function/variable in library to set external input
-# MyModel = MyModelLib.my_model_step
-# MyModel.restype = None
+except Exception as exc:
+    print(f"The exception is : {exc}")
 
 # Function to provide external input
 def MyModelSim(input):
@@ -36,9 +32,9 @@ def MyModelSim(input):
     # Assign input and run function from library
     value_U.x = input
     MyModelLib.my_model_step()
-    
-    # Print I/O
-    # print('Input is ' + str(value_U.x) + '\n')
-    # print('Output is ' + str(value_Y.x) + '\n')
 
     return value_Y.x
+
+# Function to initialize generated code (SwuAEBDecision)
+def MyModel_Init():
+    MyModelLib.my_model_initialize()

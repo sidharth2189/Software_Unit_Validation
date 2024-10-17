@@ -1,3 +1,12 @@
-From inside the folder my_model_ert_rtw/
+# Generate shared library. 
+# Prerequisite: Generated code is available.
 
-gcc -o my_model_win32.so -shared -fPIC -O2 .\my_model.c .\my_model.h .\my_model_private.h .\my_model_types.h .\rtwtypes.h
+
+# Powershell:
+gcc -o my_model.so -shared -fPIC -O2 -I .\my_model_ert_rtw\ .\my_model_ert_rtw\*.c
+
+# Gitbash:
+gcc -o my_model.so -shared -fPIC -O2 -I my_model_ert_rtw/ my_model_ert_rtw/*.c
+
+# Reference:
+1. https://stackoverflow.com/questions/973146/how-to-include-header-files-in-gcc-search-path

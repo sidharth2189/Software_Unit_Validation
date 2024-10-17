@@ -1,0 +1,31 @@
+Coverage:
+ 
+To find the code coverage of a shared library (.so file) using gcov with Robot Framework testsuite, follow these steps:
+ 
+1. Compile the shared library with the necessary debugging flags to generate coverage data. 
+For example, if your shared library is named 'my_model.so', compile it with the -fprofile-arcs and -ftest-coverage flags:
+```
+gcc -fprofile-arcs -ftest-coverage -shared -o my_model.so -I my_model_ert_rtw/ my_model_ert_rtw/*.c
+```
+ 
+2. Run your Robot Framework testsuite that includes the tests for the shared library. Make sure to execute all relevant test cases.
+ 
+3. After running the testsuite, navigate to the directory where the shared library is located. 
+You should see some .gcda and .gcno files generated. These files contain the coverage data for your shared library.
+ 
+4. Use the gcovr command to generate a coverage report for your shared library. For example, run:
+```
+gcovr --html-details MyModel.html
+```
+if some file needs to be excluded from coverage, this may be informed to gcovr. For example:
+```
+gcovr --html-details MyModel.html --exclude='my_model_ert_rtw/ert_main.c'
+```
+
+5. This will search for all your .gcno and .gcda files, run the compiler’s gcov tool, and summarize the code coverage statistics into a report. 
+By default, we get a text summary on the command line that shows aggregate statistics for each line.
+ 
+ 
+Reference: 
+1. https://gcovr.com/en/5.1/guide/compiling.html
+2. https://pypi.org/project/gcovr/

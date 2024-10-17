@@ -1,0 +1,12 @@
+[
+{
+  "directory": "C:/Users/sidharthd/SamplePy/my_model_ert_rtw/build",
+  "command": "C:/msys64/mingw64/bin/gcc.exe -DALLOCATIONFCN=0 -DCLASSIC_INTERFACE=0 -DHAVESTDIO -DINTEGER_CODE=0 -DMAT_FILE=0 -DMODEL=my_model -DMODEL_HAS_DYNAMICALLY_LOADED_SFCNS=0 -DMT=0 -DMULTI_INSTANCE_CODE=0 -DNCSTATES=0 -DNUMST=1 -DONESTEPFCN=1 -DTERMFCN=1 -DTID01EQ=0 @CMakeFiles/my_model_objects.dir/includes_C.rsp -O3 -DNDEBUG -o CMakeFiles/my_model_objects.dir/my_model.c.obj -c C:/Users/sidharthd/SamplePy/my_model_ert_rtw/my_model.c",
+  "file": "C:/Users/sidharthd/SamplePy/my_model_ert_rtw/my_model.c"
+},
+{
+  "directory": "C:/Users/sidharthd/SamplePy/my_model_ert_rtw/build",
+  "command": "C:/msys64/mingw64/bin/gcc.exe -DALLOCATIONFCN=0 -DCLASSIC_INTERFACE=0 -DHAVESTDIO -DINTEGER_CODE=0 -DMAT_FILE=0 -DMODEL=my_model -DMODEL_HAS_DYNAMICALLY_LOADED_SFCNS=0 -DMT=0 -DMULTI_INSTANCE_CODE=0 -DNCSTATES=0 -DNUMST=1 -DONESTEPFCN=1 -DTERMFCN=1 -DTID01EQ=0 @CMakeFiles/my_model.dir/includes_C.rsp -O3 -DNDEBUG -o CMakeFiles/my_model.dir/ert_main.c.obj -c C:/Users/sidharthd/SamplePy/my_model_ert_rtw/ert_main.c",
+  "file": "C:/Users/sidharthd/SamplePy/my_model_ert_rtw/ert_main.c"
+}
+]
