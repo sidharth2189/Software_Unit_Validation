@@ -35,6 +35,6 @@ def MyModelSim(input):
 
     return value_Y.x
 
-# Function to initialize generated code (SwuAEBDecision)
+# Function to initialize generated code
 def MyModel_Init():
     MyModelLib.my_model_initialize()
