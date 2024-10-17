@@ -1,4 +1,4 @@
-# Input2SimulinkGenCode
+# Software Unit Validation
 
 ## Objective
 1. The objective of repository is to demonstrate that for purpose of unit validation (SWE.4), input can be provided externally (Robot framework & Python) to generated C code from Simulink model.
