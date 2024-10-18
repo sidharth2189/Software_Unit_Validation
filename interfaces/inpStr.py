@@ -12,3 +12,6 @@ class aStruct(Structure):
 #                ("y", c_double* 10),
 #                ("z", c_bool* 5),
 #        ]
+
+# Sample initialization for array based structure
+#a = (c_float*3)(1.57, 1.5, 0.5)
