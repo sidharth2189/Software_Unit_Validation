@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as ET
+import subprocess
 
 # Load the XML file
 tree = ET.parse('coverage.xml')
@@ -54,4 +55,7 @@ root.set('function-rate', f"{function_coverage:.4f}")
 # Save the modified XML
 tree.write('filtered_coverage.xml', encoding='utf-8', xml_declaration=True)
 
-print("Filtered coverage report generated: filtered_coverage.xml")
+# Generate the HTML report from the modified XML
+subprocess.run(['gcovr', '-r', '.', '--html', '--html-details', '-o', 'filtered_coverage.html', '--xml', 'filtered_coverage.xml'])
+
+print("Filtered coverage report generated: filtered_coverage.html")
