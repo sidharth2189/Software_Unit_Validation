@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 
 # Load the HTML file
-with open('coverage.html', 'r') as file:
+with open('coverage.html', 'r', encoding='utf-8') as file:
     soup = BeautifulSoup(file, 'html.parser')
 
 # Specify the function name to exclude
@@ -64,8 +64,8 @@ if coverage_summary:
     if function_coverage_elem:
         function_coverage_elem.string = f"{function_coverage:.2f}%"
 
-# Save the modified HTML
-with open('filtered_coverage.html', 'w') as file:
+# Save the modified HTML with UTF-8 encoding
+with open('filtered_coverage.html', 'w', encoding='utf-8') as file:
     file.write(str(soup))
 
 print("Filtered coverage report generated: filtered_coverage.html")
