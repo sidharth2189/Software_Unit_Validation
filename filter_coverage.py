@@ -1,8 +1,8 @@
-from bs4 import BeautifulSoup
+import xml.etree.ElementTree as ET
 
-# Load the HTML file
-with open('coverage.html', 'r', encoding='utf-8') as file:
-    soup = BeautifulSoup(file, 'html.parser')
+# Load the XML file
+tree = ET.parse('coverage.xml')
+root = tree.getroot()
 
 # Specify the function name to exclude
 function_name = 'my_function'  # Replace with the actual function name
@@ -15,57 +15,43 @@ covered_branches = 0
 total_functions = 0
 covered_functions = 0
 
-# Find and remove function entries
-function_entries = soup.find_all('tr')
-for entry in function_entries:
-    if function_name in entry.text:
-        # Update coverage metrics before removing
-        cells = entry.find_all('td')
-        if len(cells) >= 5:  # Check that there are enough columns
-            line_count = int(cells[1].text)  # Total lines (2nd column)
-            covered_count = int(cells[2].text)  # Covered lines (3rd column)
-            branch_count = int(cells[3].text)  # Total branches (4th column)
-            covered_branch_count = int(cells[4].text)  # Covered branches (5th column)
+# Iterate over each file in the XML
+for file in root.findall('file'):
+    # Iterate over each function in the file
+    functions = file.findall('functions/function')
+    for function in functions:
+        if function.get('name') == function_name:
+            # Gather metrics before removal
+            total_functions += 1
+            covered_functions += int(function.get('hits') > 0)
+            # Remove the function from the XML
+            file.remove(function)
+        else:
+            total_functions += 1
+            covered_functions += int(function.get('hits') > 0)
 
-            total_lines += line_count
-            covered_lines += covered_count
-            total_branches += branch_count
-            covered_branches += covered_branch_count
-            
-        total_functions += 1  # Counting the removed function
-        entry.decompose()  # Remove the function entry
+    # Iterate over each line in the file to gather line coverage
+    for line in file.findall('lines/line'):
+        total_lines += 1
+        if int(line.get('hits')) > 0:
+            covered_lines += 1
+        # If branch coverage is available
+        if 'branches' in line.attrib:
+            total_branches += 1
+            if int(line.get('branches')) > 0:
+                covered_branches += 1
 
 # Update overall coverage metrics
-if total_lines > 0:
-    line_coverage = (covered_lines / total_lines) * 100
-else:
-    line_coverage = 0
+line_coverage = (covered_lines / total_lines * 100) if total_lines > 0 else 0
+branch_coverage = (covered_branches / total_branches * 100) if total_branches > 0 else 0
+function_coverage = (covered_functions / (total_functions - 1) * 100) if total_functions > 1 else 0
 
-if total_branches > 0:
-    branch_coverage = (covered_branches / total_branches) * 100
-else:
-    branch_coverage = 0
+# Update the root element with new coverage metrics
+root.set('line-rate', f"{line_coverage:.4f}")
+root.set('branch-rate', f"{branch_coverage:.4f}")
+root.set('function-rate', f"{function_coverage:.4f}")
 
-# Function coverage calculation (excluding the removed function)
-total_functions = max(total_functions - 1, 1)  # Ensure at least 1 for division
-function_coverage = (covered_functions / total_functions) * 100 if total_functions > 0 else 0
+# Save the modified XML
+tree.write('filtered_coverage.xml', encoding='utf-8', xml_declaration=True)
 
-# Update the coverage summary in the HTML
-coverage_summary = soup.find('div', class_='summary')
-if coverage_summary:
-    line_coverage_elem = coverage_summary.find('span', class_='line-coverage')
-    branch_coverage_elem = coverage_summary.find('span', class_='branch-coverage')
-    function_coverage_elem = coverage_summary.find('span', class_='function-coverage')
-
-    if line_coverage_elem:
-        line_coverage_elem.string = f"{line_coverage:.2f}%"
-    if branch_coverage_elem:
-        branch_coverage_elem.string = f"{branch_coverage:.2f}%"
-    if function_coverage_elem:
-        function_coverage_elem.string = f"{function_coverage:.2f}%"
-
-# Save the modified HTML with UTF-8 encoding
-with open('filtered_coverage.html', 'w', encoding='utf-8') as file:
-    file.write(str(soup))
-
-print("Filtered coverage report generated: filtered_coverage.html")
+print("Filtered coverage report generated: filtered_coverage.xml")
