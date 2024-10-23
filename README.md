@@ -49,5 +49,6 @@
 8. https://pypi.org/project/gcovr/
 9. https://stackoverflow.com/questions/16981921/relative-imports-in-python-3
 10. https://stackoverflow.com/questions/973146/how-to-include-header-files-in-gcc-search-path
+11. https://docs.robotframework.org/docs/parallel
 
 
